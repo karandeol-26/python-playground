@@ -1,3 +1,4 @@
+# A simple Python program that prints a formatted monthly calendar for any given month and year.
 # this is to read the input from terminal
 import sys
 
