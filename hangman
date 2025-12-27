@@ -1,0 +1,103 @@
+import random
+
+words_list = ["awkward", "apple", "rhythm", "cryptic", "knapsack"]
+word = random.choice(words_list)
+
+space = "_" * len(word)
+
+print('''
+ _                                             
+| |                                            
+| |__   __ _ _ __   __ _ _ __ ___   __ _ _ __  
+| '_ \ / _' | '_ \ / _' | '_ ' _ \ / _' | '_ \ 
+| | | | (_| | | | | (_| | | | | | | (_| | | | |
+|_| |_|\__,_|_| |_|\__, |_| |_| |_|\__,_|_| |_|
+                    __/ |                      
+                   |___/     
+''')
+
+lives = 6
+lives_5 = ['''
+  +---+
+  |   |
+  O   |
+      |
+      |
+      |
+=========
+****************************5/6 LIVES LEFT****************************
+    ''',
+'''
+  +---+
+  |   |
+  O   |
+  |   |
+      |
+      |
+=========
+****************************4/6 LIVES LEFT****************************
+''',
+'''
+  +---+
+  |   |
+  O   |
+ /|   |
+      |
+      |
+=========
+****************************3/6 LIVES LEFT****************************
+''',
+'''
+  +---+
+  |   |
+  O   |
+ /|\  |
+      |
+      |
+=========
+****************************2/6 LIVES LEFT****************************
+''',
+'''
+  +---+
+  |   |
+  O   |
+ /|\  |
+ /    |
+      |
+=========
+****************************1/6 LIVES LEFT****************************
+'''
+]
+
+correct_letters = []
+revealed_word = space
+
+while lives > 0:
+    print(f"Word to guess: {revealed_word}")
+    guess = input("Guess a letter: ").lower()
+
+    if guess in correct_letters:
+        print(f"You've already guessed '{guess}'.")
+        continue
+
+    if guess in word:
+        correct_letters.append(guess)
+        revealed_word = ""
+        for i in word:
+            if i in correct_letters:
+                revealed_word += i
+            else:
+                revealed_word += "_"
+
+        if "_" not in revealed_word:
+            print(f"\n🎉 You guessed the word: {word}")
+            break
+
+    else:
+        lives -= 1
+        print(f"You guessed '{guess}', that's not in the word. You lose a life.")
+        if lives > 0:
+            print(lives_5[5 - lives])
+        else:
+            print("*********************** YOU LOSE ***********************")
+            print(f"The word was: {word}")
