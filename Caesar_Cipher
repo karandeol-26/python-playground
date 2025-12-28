@@ -1,0 +1,98 @@
+# ------------------------------------------------------------
+# Caesar Cipher Implementation (Python)
+#
+# This program implements a classic Caesar cipher for encoding
+# and decoding text using a fixed shift value.
+#
+# Core idea:
+# - Each letter is mapped to an index (a = 0, ..., z = 25)
+# - Shifting is done using modular arithmetic (% 26) to ensure
+#   the alphabet "wraps around" correctly (e.g., z -> a)
+#
+# Why modulo 26:
+# - The English alphabet has 26 letters
+# - Modulo ensures shifted indices always stay within [0, 25]
+# - This models the alphabet as a cyclic structure
+#
+# Design choices:
+# - Only lowercase alphabetic characters and spaces are supported
+# - Spaces are preserved; other characters are not handled
+# - Encoding and decoding are implemented as separate functions
+#
+# This project focuses on correctness, clarity, and learning
+# fundamental string manipulation and modular arithmetic.
+# ------------------------------------------------------------
+
+import string
+list_alpha = []
+list_alpha.extend(string.ascii_lowercase)
+
+def encode(word, shift_num):
+    word = word.lower()
+    encoded_word = ""
+    for i in word:
+        if i == " ":
+            encoded_word += " "
+        else:
+            index = list_alpha.index(i)
+            index = (index + shift_num)% 26
+            new_letter = list_alpha[index]
+            encoded_word += new_letter
+    return encoded_word
+
+def decode(word, shift_num):
+    word = word.lower()
+    decoded_word = ""
+    for i in word:
+        if i == " ":
+            decoded_word += " "
+        else:
+            index = list_alpha.index(i)
+            index = (index - shift_num)%26
+            new_letter = list_alpha[index]
+            decoded_word += new_letter
+    return decoded_word
+
+
+print('''
+ ,adPPYba, ,adPPYYba,  ,adPPYba, ,adPPYba, ,adPPYYba, 8b,dPPYba,  
+a8"     "" ""     'Y8 a8P_____88 I8[    "" ""     'Y8 88P'   "Y8  
+8b         ,adPPPPP88 8PP"""""""  '"Y8ba,  ,adPPPPP88 88          
+"8a,   ,aa 88,    ,88 "8b,   ,aa aa    ]8I 88,    ,88 88          
+ '"Ybbd8"' '"8bbdP"Y8  '"Ybbd8"' '"YbbdP"' '"8bbdP"Y8 88   
+            88             88                                 
+           ""             88                                 
+                          88                                 
+ ,adPPYba, 88 8b,dPPYba,  88,dPPYba,   ,adPPYba, 8b,dPPYba,  
+a8"     "" 88 88P'    "8a 88P'    "8a a8P_____88 88P'   "Y8  
+8b         88 88       d8 88       88 8PP""""""" 88          
+"8a,   ,aa 88 88b,   ,a8" 88       88 "8b,   ,aa 88          
+ '"Ybbd8"' 88 88'YbbdP"'  88       88  '"Ybbd8"' 88          
+              88                                             
+              88
+''')
+
+
+while True:
+    func = input("Type 'encode' to encrypt, type 'decode' to decrypt: ").strip().lower()
+    if func == "encode":
+        messg = input("Type Your message: ").strip().lower()
+        shift_num = int(input("Type the shift number: "))
+        print(encode(messg, shift_num))
+        rerun = input("Type 'yes' if you want to go again. Otherwise type 'no'.").strip().lower()
+        if rerun == "yes":
+            pass
+        elif rerun == "no":
+            break
+    elif func == "decode":
+        messg = input("Type Your message: ").strip().lower()
+        shift_num = int(input("Type the shift number: "))
+        print(decode(messg,shift_num))
+        rerun = input("Type 'yes' if you want to go again. Otherwise type 'no'.").strip().lower()
+        if rerun == "yes":
+            pass
+        elif rerun == "no":
+            break
+    else:
+        print("Invalid Input!")
+
