@@ -1,0 +1,114 @@
+# Simple Coffee Machine Simulation
+# --------------------------------
+# This program simulates a coffee machine that can make espresso, latte, and cappuccino.
+# It checks if enough resources (water, milk, coffee) are available before proceeding,
+# asks the user to insert coins, handles insufficient payment, returns change if needed,
+# and only deducts resources after a successful transaction.
+# The machine also supports a report command to view current resources and an off command
+# to stop the program.
+
+# latte --> 200 ml water , 24g coffee , 150 ml milk
+# cappuccino --> 250 ml water, 24g coffee , 100 ml milk
+# espresso --> 50 ml water , 18g coffee
+
+resources = {
+    "water": 300,
+    "milk": 200,
+    "coffee": 100,
+    "money": 0
+}
+
+Menu = {
+    "espresso": {
+        "water": 50,
+        "milk": 0,
+        "coffee": 18
+    },
+    "latte": {
+        "water": 200,
+        "milk": 150,
+        "coffee": 24
+    },
+    "cappuccino": {
+        "water": 250,
+        "milk": 100,
+        "coffee": 24
+    }
+}
+
+def check_resources(coffee):
+    water_usd = Menu[coffee]["water"]
+    milk_usd = Menu[coffee]["milk"]
+    coffee_usd = Menu[coffee]["coffee"]
+
+    if water_usd > resources["water"]:
+        print("Not enough water")
+        return False
+
+    if milk_usd > resources["milk"]:
+        print("Not enough milk")
+        return False
+
+    if coffee_usd > resources["coffee"]:
+        print("Not enough coffee")
+        return False
+
+    return True
+
+def transaction(choice, cost):
+    quarter = int(input("how many quarters: "))
+    dimes = int(input("how many dimes: "))
+    nickles = int(input("how many nickles: "))
+    pennies = int(input("how many pennies: "))
+
+    amount_paid = (quarter * 0.25) + (dimes * 0.10) + (nickles * 0.05) + (pennies * 0.01)
+
+    if amount_paid < cost:
+        print("Sorry that's not enough money. Money refunded.")
+        return False
+
+    change = amount_paid - cost
+    print(f"Here is your change ${change}")
+    print("Making coffee.....")
+    print(f"Here is your {choice} enjoy")
+    return True
+
+while True:
+    choice = input("What would you like? (espresso/latte/cappuccino): ").strip().lower()
+
+    if choice == "espresso":
+        if not use_check_resources(choice):
+            continue
+        cost = 1.5
+        print(f"espresso is ${cost}, please insert coins")
+        if not transaction(choice, cost):
+            continue
+
+    elif choice == "latte":
+        if not use_check_resources(choice):
+            continue
+        cost = 3.5
+        print(f"{choice} is ${cost}, please insert coins")
+        if not transaction(choice, cost):
+            continue
+
+    elif choice == "cappuccino":
+        if not use_check_resources(choice):
+            continue
+        cost = 2.5
+        print(f"{choice} is ${cost}, please insert coins")
+        if not transaction(choice, cost):
+            continue
+
+    elif choice == "report":
+        for key, value in resources.items():
+            print(f"{key}: {value}")
+        continue
+
+    elif choice == "off":
+        break
+
+    # Deduct resources only after a successful transaction
+    resources["water"] -= Menu[choice]["water"]
+    resources["milk"] -= Menu[choice]["milk"]
+    resources["coffee"] -= Menu[choice]["coffee"]
