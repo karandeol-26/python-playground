@@ -1,3 +1,11 @@
+# Snake Game (Python Turtle)
+# --------------------------
+# An object-oriented implementation of the classic Snake game using Python's
+# Turtle graphics. Built to practice:
+# - Class-based game architecture
+# - Screen refresh control via tracer/update
+# - Collision detection and state updates
+
 import turtle as t
 import time
 from snake import Snake
