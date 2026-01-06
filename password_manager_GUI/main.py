@@ -83,7 +83,7 @@ def search_password():
         except FileNotFoundError:
             messagebox.showinfo(title="Oops", message="you haven't saved any passwoords")
 
-        except KeyError:
+        except AttributeError:
             messagebox.showinfo(title="Oops", message=f"you haven't saved a password for{website}")
     else:
          messagebox.showinfo(title="Oops", message="Please make sure you haven't left any fields empty.")
