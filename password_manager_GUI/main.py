@@ -7,6 +7,7 @@ Features:
 - User inputs for website and username/email
 - One-click password generation
 - Save functionality (local storage logic handled separately)
+- Uses pyperclip to copy passwords to clipboard
 
 This project focuses on Python fundamentals and security-conscious design,
 not advanced GUI development.
@@ -18,6 +19,7 @@ and practical usability.
 from tkinter import *
 from tkinter import messagebox
 from combinations import create_password
+import pyperclip
 import json
 
 FILEPATH = "data.json"
@@ -62,8 +64,15 @@ def save_password():
             data.update(new_entry)
             with open(FILEPATH, 'w') as file:
                 json.dump(data, file, indent= 4)
+        pyperclip.copy(password)
+        website_entry.delete(0, END)
+        username_entry.delete(0, END)
+        password_entry.delete(0, END)
+
     else:
        messagebox.showinfo(title="Oops", message="Please make sure you haven't left any fields empty.")
+
+
 
 
         
